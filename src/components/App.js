@@ -121,10 +121,6 @@ function App() {
   }
 
   React.useEffect(() => {
-    handleCheckToken();
-  }, []);
-
-  function handleCheckToken(){
     const jwt =localStorage.getItem("jwt");
     if (jwt){
       auth.checkToken(jwt)
@@ -140,7 +136,7 @@ function App() {
         console.log('401 — Переданный токен некорректен')
       })
     }
-  }
+  },);
 
   function handleRegSubmit(email,password){
     auth.register(email,password)
@@ -231,7 +227,7 @@ function App() {
             <Register onSubmit={handleRegSubmit}/>
           </Route>
           <Route path="/">
-            {isLoggedIn ? <Redirect to="/main" /> : <Redirect to="/sign-in" />}
+            {isLoggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
           </Route>
         </Switch>
         <Footer />

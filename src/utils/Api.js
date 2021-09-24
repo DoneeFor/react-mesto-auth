@@ -26,9 +26,9 @@ class Api {
   }
 
 
-  likeCard(id, method) {
+  likeCard(id) {
     return fetch(`${this._baseUrl}/cards/likes/${id}`, {
-      method: `${method}`,
+      method: `PUT`,
       headers: this._headers,
     })
       .then(this._checkRequestResult)
@@ -39,7 +39,7 @@ class Api {
         method: 'DELETE',
         headers: this._headers,
     })
-      .then((res) => this._getResponse(res))
+      .then((res) => this._checkRequestResult(res))
   }
 
   likeCardStatus(cardId, isLiked) {
