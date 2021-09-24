@@ -8,7 +8,7 @@ function Header({email,onSignOut}) {
       <div className="header__container">
         <Route exact path="/">
           <p className="header__email">{email}</p>
-          <Link to="/sign-in" className="header__link" onClick={onSignOut}>Выйти</Link>
+          <button className="header__link" onClick={onSignOut}>Выйти</button>
         </Route>
         <Route exact path="/sign-in">
           <Link to="/sign-up" className="header__link">Регистрация</Link>

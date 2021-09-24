@@ -1,5 +1,5 @@
 import PopupWithForm from "./PopupWithForm";
-import React from 'react';
+import React, { useEffect } from 'react';
 
 function AddCardPopup(props) {
 
@@ -14,11 +14,14 @@ function AddCardPopup(props) {
     setLink(e.target.value);
   }
 
+  useEffect(() => {
+    setPlace('');
+    setLink('');
+  }, [props.isOpen])
+
   function handleSubmit(e) {
-      e.preventDefault();
-      props.onAddPlace(place, link);
-      setPlace('');
-      setLink('');
+    e.preventDefault();
+    props.onAddPlace(place, link);
   }
 
   return (

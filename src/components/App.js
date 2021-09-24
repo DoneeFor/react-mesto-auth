@@ -13,8 +13,8 @@ import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
 import Register from './Register';
 import InfoToolTip from './InfoTooltip';
-import { Route, Switch, useHistory } from 'react-router-dom';
-import * as auth from './Auth';
+import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
+import * as auth from '../utils/Auth';
 import '../index.css';
 
 function App() {
@@ -32,7 +32,6 @@ function App() {
   const [isInfoPopupOpen,setIsInfoPopupOpen] = React.useState(false);
 
   React.useEffect(() => {
-    handleCheckToken();
     api.getUserData()
       .then(user => {
         setCurrentUser(user);
@@ -60,8 +59,8 @@ function App() {
     })
   },[]);
 
-  function overlayClick(e) {
-    if (e.classList.contains('popup')){
+  function overlayClick(evt) {
+    if (evt.target.classList.contains('popup')){
       closeAllPopups()
     }
   }
@@ -113,12 +112,17 @@ function App() {
   function handleAddPlace(name, link) {
     api.postCard(name, link)
      .then((res) => {
-      setCards([res, ...cards])
+      setCards([res, ...cards]);
+      closeAllPopups();
     })
     .catch(err => {
       console.log (`Ошибка: ${err}`)
     });
   }
+
+  React.useEffect(() => {
+    handleCheckToken();
+  }, []);
 
   function handleCheckToken(){
     const jwt =localStorage.getItem("jwt");
@@ -196,7 +200,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsImagePopupOpen(false);
-    setSelectedCard(false);
+    setSelectedCard({});
     setIsInfoPopupOpen(false);
   }
 
@@ -225,6 +229,9 @@ function App() {
           </Route>
           <Route  path="/sign-up">
             <Register onSubmit={handleRegSubmit}/>
+          </Route>
+          <Route path="/">
+            {isLoggedIn ? <Redirect to="/main" /> : <Redirect to="/sign-in" />}
           </Route>
         </Switch>
         <Footer />

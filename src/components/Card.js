@@ -36,7 +36,7 @@ function Card(props) {
         <h2 className="card__title">{props.name}</h2>
         <div className="card__like-place">
           <button type="submit" className={cardLikeButtonClassName} onClick={handleLikeClick}></button>
-          <span className="card__like-count">{props.like}</span>
+          <span className="card__like-count">{props.likes}</span>
         </div>
       </figcaption>
     </figure>

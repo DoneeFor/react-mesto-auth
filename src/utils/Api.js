@@ -34,8 +34,16 @@ class Api {
       .then(this._checkRequestResult)
   }
 
+  dislikeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+        method: 'DELETE',
+        headers: this._headers,
+    })
+      .then((res) => this._getResponse(res))
+  }
+
   likeCardStatus(cardId, isLiked) {
-    return isLiked ? this.like(cardId) : this.dislike(cardId);
+    return isLiked ? this.likeCard(cardId) : this.dislikeCard(cardId);
   }
 
   postCard(name, link) {

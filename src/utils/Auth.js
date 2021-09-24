@@ -32,12 +32,6 @@ export const login = (email, password)=>{
       "password": password
     })
   }).then(checkResponse)
-  .then((data) => {
-      if (data.token){
-          localStorage.setItem('jwt', data.token);
-          return data;
-      }
-  })
 }
 
 export const checkToken  = (jwt)=>{
